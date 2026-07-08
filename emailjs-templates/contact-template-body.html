@@ -1,0 +1,212 @@
+<!-- Outer background table (designed for direct paste into EmailJS source code view) -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #000005; table-layout: fixed; width: 100%; margin: 0; padding: 40px 10px; font-family: 'Inter', Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased;">
+  <tr>
+    <td align="center" valign="top" style="padding: 40px 10px;">
+      
+      <!-- Email Container Card (max 600px) -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #0D1E3B; border: 1px solid #097EE6; border-radius: 8px; overflow: hidden; border-collapse: collapse;">
+        
+        <!-- Top Glowing Highlight Line -->
+        <tr>
+          <td height="4" style="background: linear-gradient(90deg, #097EE6 0%, #2FBAEA 100%); background-color: #097EE6; line-height: 4px; font-size: 0px;">&nbsp;</td>
+        </tr>
+
+        <!-- Header Section with Logo -->
+        <tr>
+          <td align="center" valign="top" style="padding: 32px 20px 24px 20px; border-bottom: 1px solid #464A4E;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center">
+                  <!-- If logo URL exists, display it; otherwise, display fallback styled text -->
+                  <a href="https://kaarnex.com" target="_blank" style="text-decoration: none;">
+                    <img src="{{logo_url}}" alt="Kaarnex" border="0" style="display: block; max-width: 180px; max-height: 48px; width: auto; height: auto; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; color: #F8FAFC; letter-spacing: 0.1em;" />
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Hero / Notification Intro -->
+        <tr>
+          <td align="center" valign="top" style="padding: 32px 32px 16px 32px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; color: #F8FAFC; line-height: 30px; letter-spacing: -0.02em; padding-bottom: 12px;">
+                  New Website Enquiry
+                </td>
+              </tr>
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 400; color: #B5B6B7; line-height: 20px; padding-bottom: 24px;">
+                  A new Contact / Discovery request has been submitted from the Kaarnex website.
+                </td>
+              </tr>
+              
+              <!-- Enquiry Type Highlight Card -->
+              <tr>
+                <td align="left" style="background-color: #0A469D; border-left: 4px solid #2FBAEA; border-radius: 4px; padding: 16px 20px; box-sizing: border-box;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                      <td style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #2FBAEA; letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 4px;">
+                        Enquiry Type
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; color: #F8FAFC; line-height: 24px;">
+                        {{enquiry_type}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Main Details Sections -->
+        <tr>
+          <td align="left" valign="top" style="padding: 16px 32px 32px 32px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              
+              <!-- SECTION 1: CONTACT DETAILS -->
+              <tr>
+                <td style="padding-top: 16px; padding-bottom: 8px; border-bottom: 2px solid #097EE6;">
+                  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; color: #2FBAEA; letter-spacing: 0.08em; text-transform: uppercase;">1. Contact Details</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top: 10px; padding-bottom: 20px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                    <!-- Name -->
+                    <tr>
+                      <td width="35%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Name</td>
+                      <td width="65%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">{{name}}</td>
+                    </tr>
+                    <!-- Email -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Work Email</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">
+                        <a href="mailto:{{email}}" style="color: #097EE6; text-decoration: none; font-weight: 600;">{{email}}</a>
+                      </td>
+                    </tr>
+                    <!-- Phone -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Phone Number</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">{{phone}}</td>
+                    </tr>
+                    <!-- Preferred Contact Method -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0;">Preferred Contact</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0;">{{preferred_contact}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- SECTION 2: BUSINESS CONTEXT -->
+              <tr>
+                <td style="padding-top: 10px; padding-bottom: 8px; border-bottom: 2px solid #097EE6;">
+                  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; color: #2FBAEA; letter-spacing: 0.08em; text-transform: uppercase;">2. Business Context</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top: 10px; padding-bottom: 20px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                    <!-- Company -->
+                    <tr>
+                      <td width="35%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Company</td>
+                      <td width="65%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">{{company}}</td>
+                    </tr>
+                    <!-- Role / Title -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Role / Title</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">{{role}}</td>
+                    </tr>
+                    <!-- Country / Region -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0; border-bottom: 1px solid #464A4E;">Country / Region</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0; border-bottom: 1px solid #464A4E;">{{region}}</td>
+                    </tr>
+                    <!-- Timeline / Urgency -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #B5B6B7; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0;">Timeline / Urgency</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; padding: 10px 0;">{{timeline}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- SECTION 3: PROGRAM DETAILS / MESSAGE -->
+              <tr>
+                <td style="padding-top: 10px; padding-bottom: 8px; border-bottom: 2px solid #097EE6;">
+                  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; color: #2FBAEA; letter-spacing: 0.08em; text-transform: uppercase;">3. Program Details</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top: 16px; padding-bottom: 24px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                      <td style="background-color: #000005; border: 1px solid #464A4E; border-radius: 4px; padding: 20px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #E5E7E8; line-height: 22px; white-space: pre-wrap; word-break: break-word;">{{message}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- SECTION 4: SUBMISSION METADATA -->
+              <tr>
+                <td style="padding-top: 10px; padding-bottom: 8px; border-bottom: 2px solid #464A4E;">
+                  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 700; color: #B5B6B7; letter-spacing: 0.08em; text-transform: uppercase;">Submission Metadata</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top: 10px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <!-- Page URL -->
+                    <tr>
+                      <td width="35%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #B5B6B7; padding: 6px 0;">Submitted From</td>
+                      <td width="65%" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #E5E7E8; padding: 6px 0; word-break: break-all;">
+                        <a href="{{page_url}}" style="color: #2FBAEA; text-decoration: none;">{{page_url}}</a>
+                      </td>
+                    </tr>
+                    <!-- Submitted At -->
+                    <tr>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #B5B6B7; padding: 6px 0;">Timestamp</td>
+                      <td valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #E5E7E8; padding: 6px 0;">{{submitted_at}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer Section -->
+        <tr>
+          <td align="center" valign="top" style="background-color: #000005; padding: 32px 32px 32px 32px; border-top: 1px solid #464A4E;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 700; color: #F8FAFC; letter-spacing: 0.05em; padding-bottom: 4px;">
+                  Kaarnex
+                </td>
+              </tr>
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 500; color: #2FBAEA; letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 20px;">
+                  Where Vehicles Meet Intelligence
+                </td>
+              </tr>
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #B5B6B7; line-height: 16px;">
+                  &copy; 2026 Kaarnex. All rights reserved.<br />
+                  This email is an automated transmission from the Kaarnex platform discovery system.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+      </table>
+
+    </td>
+  </tr>
+</table>

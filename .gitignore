@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+
+# Next.js output
+/.next
+/out
+
+# local tooling
+*.log
+.DS_Store
+.env*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# supplied design reference
+/.reference-export
+/Kaarnex Website Animation Direction.zip
