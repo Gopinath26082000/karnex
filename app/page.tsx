@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Action, CTA, Kicker, ProofGrid, SectionHead } from "@/components/Content";
 import { ScrollHero } from "@/components/ScrollHero";
+import { publicPath } from "@/lib/publicPath";
 
 const proof = [
   {num:"01",title:"Depth over breadth",body:"We operate exclusively in mobility. Every engineer, every product, every deployment is automotive—no dilution from unrelated domains. That specialization translates directly into faster delivery and fewer integration surprises."},
@@ -14,8 +15,8 @@ export default function Home() {
   return <main id="main">
     <ScrollHero kind="home"/>
     <section className="export-section"><div className="kx-container"><SectionHead kicker="Two verticals · one mission" title="Built for operators and OEMs who demand more."/><div className="vertical-cards">
-      <Link href="/fleet"><Image src="/kaarnex/detail-grille.png" alt="Fleet intelligence" width={1200} height={560}/><div><Kicker>For operators</Kicker><h3>Fleet Intelligence Platform</h3><p>Real-time tracking, driver behavior analytics, RFID passenger boarding, SOS safety systems, and fuel intelligence—purpose-built for school buses, corporate shuttles, logistics fleets, and public transport operators.</p><span>Explore platform →</span></div></Link>
-      <Link href="/oem"><Image src="/kaarnex/detail-shell.png" alt="SDV engineering" width={1200} height={560}/><div><Kicker>For OEMs & Tier-1s</Kicker><h3>SDV / Connected Vehicle Engineering</h3><p>Remote feature delivery, OTA workflow management, ECU/TCU integration, HIL/SIL test automation, white-label mobile apps, and offshore engineering pods—for the next generation of software-defined vehicles.</p><span>Engineering services →</span></div></Link>
+      <Link href="/fleet"><Image src={publicPath("/kaarnex/detail-grille.png")} alt="Fleet intelligence" width={1200} height={560}/><div><Kicker>For operators</Kicker><h3>Fleet Intelligence Platform</h3><p>Real-time tracking, driver behavior analytics, RFID passenger boarding, SOS safety systems, and fuel intelligence—purpose-built for school buses, corporate shuttles, logistics fleets, and public transport operators.</p><span>Explore platform →</span></div></Link>
+      <Link href="/oem"><Image src={publicPath("/kaarnex/detail-shell.png")} alt="SDV engineering" width={1200} height={560}/><div><Kicker>For OEMs & Tier-1s</Kicker><h3>SDV / Connected Vehicle Engineering</h3><p>Remote feature delivery, OTA workflow management, ECU/TCU integration, HIL/SIL test automation, white-label mobile apps, and offshore engineering pods—for the next generation of software-defined vehicles.</p><span>Engineering services →</span></div></Link>
     </div></div></section>
     <section className="export-section alternate"><div className="kx-container"><SectionHead kicker="Why Kaarnex" title="Three proof points."/><ProofGrid items={proof}/></div></section>
     <section className="export-section"><div className="kx-container industries-home"><div><SectionHead kicker="Industries served" title="Every fleet. Every vehicle program."/><Action href="/industries" ghost>See use cases →</Action></div><div className="industry-list">{industries.map(([name,tag])=><div key={name}><strong>{name}</strong><span>{tag}</span></div>)}</div></div></section>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
+import { publicPath } from "@/lib/publicPath";
 import { HeroImageSequence } from "./HeroImageSequence";
 
 type HeroKind = "home" | "fleet" | "oem" | "charging" | "architecture";
@@ -76,9 +77,9 @@ export function ScrollHero({ kind }: { kind:HeroKind }) {
   return (
     <section ref={ref} className={`scroll-hero scroll-hero-${kind}`} style={{height:`${length}vh`, "--p":`${p}%`} as CSSProperties}>
       <div className="scroll-stage">
-        {kind === "home"&&<><HeroImageSequence framePath="/kaarnex/home-sequence-hq" frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="home-sequence-overlay"/></>}
-        {kind === "fleet"&&<><HeroImageSequence framePath="/kaarnex/Fleet_Intelligence_Platform_webp_frames" frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="fleet-sequence-overlay"/></>}
-        {kind === "charging"&&<><HeroImageSequence framePath="/kaarnex/Car_charging_station_img_sq" frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="charging-sequence-overlay"/></>}
+        {kind === "home"&&<><HeroImageSequence framePath={publicPath("/kaarnex/home-sequence-hq")} frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="home-sequence-overlay"/></>}
+        {kind === "fleet"&&<><HeroImageSequence framePath={publicPath("/kaarnex/Fleet_Intelligence_Platform_webp_frames")} frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="fleet-sequence-overlay"/></>}
+        {kind === "charging"&&<><HeroImageSequence framePath={publicPath("/kaarnex/Car_charging_station_img_sq")} frameCount={192} progress={p} filePrefix="frame_" padding={5}/><div className="charging-sequence-overlay"/></>}
         {kind !== "home"&&kind !== "charging"&&kind !== "fleet"&&<><div className="stage-grid" style={{opacity:enter(p,36,14)*.55}}/><div className="stage-route route-one" style={{width:`${enter(p,38,18)*100}%`,opacity:enter(p,38,8)}}/><div className="stage-route route-two" style={{width:`${enter(p,44,18)*82}%`,opacity:enter(p,44,8)}}/></>}
 
         {kind === "oem" ? <VehicleScene kind={kind} progress={p}/> : null} 
@@ -105,7 +106,7 @@ function VehicleScene({ kind, progress:p }: { kind:"home"|"oem"; progress:number
     ["GPS · LOCKED","12%","38%",18],["TCU · ONLINE","46%","10%",21],["CAN · 500 KB/S","38%","58%",24],["RFID · ARMED","60%","40%",27],["OTA · READY","78%","18%",30],["SOS · STANDBY","20%","72%",33]
   ] : [["TCU · V2C LINK","48%","8%",18],["ECU · BODY CTRL","16%","42%",24],["CAN / LIN BUS","40%","60%",30],["UDS · 0 DTC","64%","44%",38],["OTA · WAVE 3","76%","16%",58]];
   return <div className={`photo-car photo-car-${kind}`} style={{transform:`translateX(${enter(p,60,24)*-7}%) scale(${1+clamp(p/100)*.06})`,filter:kind === "oem" ? "brightness(.58) saturate(.72)" : undefined}}>
-    <Image src="/kaarnex/car-hero.png" width={1600} height={900} alt={kind === "home" ? "Kaarnex intelligent vehicle" : "Vehicle software cutaway"} priority/>
+    <Image src={publicPath("/kaarnex/car-hero.png")} width={1600} height={900} alt={kind === "home" ? "Kaarnex intelligent vehicle" : "Vehicle software cutaway"} priority/>
     <div className="wire-scan" style={{opacity:enter(p,16,6)*leave(p,82,10)}}/><div className="scan-line" style={{left:`${4+enter(p,16,26)*88}%`,opacity:enter(p,16,5)*leave(p,40,6)}}/>
     {sensors.map(([label,x,y,at]) => <div className="sensor" key={String(label)} style={{left:String(x),top:String(y),opacity:enter(p,Number(at),6)*leave(p,90,8)}}><i/><span>{label}</span></div>)}
     {kind === "oem" && <div className="can-line" style={{width:`${enter(p,34,14)*70}%`}}/>}
@@ -115,7 +116,7 @@ function VehicleScene({ kind, progress:p }: { kind:"home"|"oem"; progress:number
 function ChargingScene({progress:p}:{progress:number}) {
   const pct=Math.round(enter(p,32,46)*100);
   const points=[["CP-01 · CHARGING","14%","18%",66,"ok"],["CP-02 · READY","32%","10%",70,"ok"],["CP-04 · CHARGING","52%","16%",74,"ok"],["CP-05 · QUEUED","68%","8%",78,"idle"],["CP-06 · FAULT → TICKET","82%","15%",82,"fault"]];
-  return <><div className="charging-car" style={{opacity:enter(p,14,10),transform:`translateX(${(1-enter(p,14,10))*-30}px) scaleX(-1)`}}><Image src="/kaarnex/car-hero.png" width={1600} height={900} alt="EV at charging bay" priority/></div><div className="energy-line" style={{opacity:enter(p,40,8)}}><i/></div>{points.map(([label,x,y,at,state])=><div key={label} className={`depot-point ${state}`} style={{left:String(x),top:String(y),opacity:enter(p,Number(at),6)}}><i/><span>{label}</span></div>)}</>;
+  return <><div className="charging-car" style={{opacity:enter(p,14,10),transform:`translateX(${(1-enter(p,14,10))*-30}px) scaleX(-1)`}}><Image src={publicPath("/kaarnex/car-hero.png")} width={1600} height={900} alt="EV at charging bay" priority/></div><div className="energy-line" style={{opacity:enter(p,40,8)}}><i/></div>{points.map(([label,x,y,at,state])=><div key={label} className={`depot-point ${state}`} style={{left:String(x),top:String(y),opacity:enter(p,Number(at),6)}}><i/><span>{label}</span></div>)}</>;
 }
 
 function HomePanels({progress:p}:{progress:number}) {

@@ -4,12 +4,13 @@ import "lenis/dist/lenis.css";
 import { Footer, Header } from "@/components/Shell";
 import { MotionOrchestrator } from "@/components/MotionOrchestrator";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
+import { publicPath } from "@/lib/publicPath";
 
 export const metadata:Metadata={
   title:{default:"Kaarnex — Where Vehicles Meet Intelligence",template:"%s — Kaarnex"},
   description:"Real-time fleet intelligence and software-defined vehicle engineering from India, built for the world.",
   icons:{
-    icon: "/favicon.ico",
+    icon: publicPath("/favicon.ico"),
   },
 };
 
