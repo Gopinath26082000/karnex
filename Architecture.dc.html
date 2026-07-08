@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Architecture, Security & Delivery</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    * { box-sizing:border-box; }
+    @keyframes kx-flow { 0% { left:0%; opacity:0; } 12% { opacity:1; } 88% { opacity:1; } 100% { left:96%; opacity:0; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center;"><img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" /></a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#eceeed; text-decoration:none; border-bottom:1px solid #22c55e; padding-bottom:3px;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;" style-hover="background:#2ee06e;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ============ SCROLL HERO: SECURE DATA FLOW ============ -->
+  <div ref="{{ heroRef }}" data-screen-label="Architecture hero — secure data flow" style="height:300vh; position:relative; --p:0;">
+    <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:radial-gradient(ellipse 80% 70% at 50% 40%, #0d1310 0%, #0a0c0b 72%);">
+
+      <!-- headline -->
+      <div style="position:absolute; left:0; right:0; top:16vh; text-align:center; opacity:calc(clamp(0, 1 - (var(--p) - 60) / 20, 1));">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">ARCHITECTURE · SECURITY · DELIVERY</div>
+        <h1 style="margin:0 auto; font-size:clamp(34px, 3.8vw, 54px); line-height:1.08; font-weight:600; letter-spacing:-0.015em; max-width:22ch;">Built to run. Built to last. Built to scale.</h1>
+        <p style="margin:18px auto 0; font-size:16px; line-height:1.6; color:#9aa39f; max-width:60ch;">The automotive industry demands zero tolerance for downtime, data integrity failures, or security vulnerabilities. We design against those expectations as a first principle.</p>
+      </div>
+
+      <!-- isometric pipeline -->
+      <div style="position:absolute; left:50%; top:58%; width:min(1100px, 92vw); transform:translate(-50%, -50%) perspective(1200px) rotateX(14deg); display:flex; align-items:center; gap:0;">
+        <sc-for list="{{ pipeline }}" as="st" hint-placeholder-count="5">
+          <div style="flex:1; display:flex; align-items:center; min-width:0;">
+            <div style="flex:1; background:rgba(16,21,18,.88); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:18px 14px; text-align:center; opacity:calc(clamp(0, (var(--p) - {{ st.at }}) / 8, 1)); transform:translateY(calc(clamp(0, 1 - (var(--p) - {{ st.at }}) / 8, 1) * 22px)); backdrop-filter:blur(8px);">
+              <div style="font-size:22px; margin-bottom:8px;">{{ st.glyph }}</div>
+              <div style="font-size:14px; font-weight:600; margin-bottom:5px;">{{ st.title }}</div>
+              <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:9.5px; letter-spacing:.12em; color:#22c55e;">{{ st.tag }}</div>
+            </div>
+            <sc-if value="{{ st.link }}" hint-placeholder-val="{{ true }}">
+              <div style="width:56px; height:1.5px; position:relative; background:rgba(34,197,94,.25); opacity:calc(clamp(0, (var(--p) - {{ st.linkAt }}) / 6, 1)); flex-shrink:0;">
+                <div style="position:absolute; top:-2px; width:10px; height:5px; border-radius:2px; background:#22c55e; box-shadow:0 0 8px rgba(34,197,94,.9); animation:kx-flow 2.8s linear infinite;"></div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- encrypted badge under pipeline -->
+      <div style="position:absolute; left:0; right:0; top:74%; display:flex; justify-content:center; gap:12px; opacity:calc(clamp(0, (var(--p) - 58) / 10, 1));">
+        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="4">
+          <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.1em; color:#b7e8c8; border:1px solid rgba(34,197,94,.3); background:rgba(12,17,14,.8); padding:9px 14px; border-radius:3px;">{{ b }}</span>
+        </sc-for>
+      </div>
+
+      <div style="position:absolute; left:40px; bottom:32px; display:flex; align-items:center; gap:14px;">
+        <div style="width:120px; height:2px; background:rgba(255,255,255,.1); border-radius:1px; overflow:hidden;"><div style="height:100%; width:calc(var(--p) * 1%); background:#22c55e;"></div></div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">VEHICLE → CLOUD · ENCRYPTED</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ THREE PILLARS ============ -->
+  <sc-for list="{{ pillars }}" as="pl" hint-placeholder-count="3">
+    <section data-screen-label="{{ pl.label }}" style="padding:110px 0; background:{{ pl.bg }}; border-top:1px solid rgba(255,255,255,.06);">
+      <div style="width:min(1200px, 88vw); margin:0 auto;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">{{ pl.kicker }}</div>
+        <h2 style="margin:0 0 52px; font-size:clamp(28px, 2.8vw, 40px); font-weight:600; letter-spacing:-0.015em;">{{ pl.title }}</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px;">
+          <sc-for list="{{ pl.items }}" as="it" hint-placeholder-count="3">
+            <div style="border-top:1px solid rgba(34,197,94,.35); padding-top:26px;">
+              <div style="font-size:18px; font-weight:600; margin-bottom:12px;">{{ it.title }}</div>
+              <p style="margin:0; font-size:14px; line-height:1.65; color:#9aa39f;">{{ it.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <!-- ============ ROADMAP NOTE ============ -->
+  <section data-screen-label="IP roadmap" style="padding:110px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(900px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">ROADMAP — PROPRIETARY IP</div>
+      <p style="margin:0; font-size:clamp(19px, 1.9vw, 25px); line-height:1.55; color:#cfd6d2;">Phase 3 of the Kaarnex roadmap converts engineering learnings into reusable accelerators — <span style="color:#22c55e;">OTA testing SDKs, HIL automation frameworks, and vehicle simulation tooling</span> — reducing custom build time and de-risking program timelines for engineering clients.</p>
+      <a href="About.dc.html" style="display:inline-block; margin-top:28px; font-size:13px; color:#22c55e; text-decoration:none; letter-spacing:.06em;">SEE THE FULL ROADMAP →</a>
+    </div>
+  </section>
+
+  <footer style="padding:56px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:26px; opacity:.85;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+      <div style="display:flex; gap:20px; font-size:12px;">
+        <a href="About.dc.html" style="color:#8b9490; text-decoration:none;">About</a>
+        <a href="Contact.dc.html" style="color:#8b9490; text-decoration:none;">Contact</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._update(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this._update();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+  _update() {
+    const hero = this._hero;
+    if (!hero) return;
+    const vh = window.innerHeight;
+    const total = Math.max(1, hero.offsetHeight - vh);
+    const y = -hero.getBoundingClientRect().top;
+    const p = Math.max(0, Math.min(1, y / total)) * 100;
+    hero.style.setProperty('--p', p.toFixed(2));
+  }
+  renderVals() {
+    return {
+      heroRef: (el) => { this._hero = el; if (el) this._update(); },
+      pipeline: [
+        { glyph: '⛟', title: 'Vehicle Edge', tag: 'BUFFER · PRIORITIZE', at: 8, link: true, linkAt: 14 },
+        { glyph: '⇄', title: 'Encrypted Channel', tag: 'TLS · DEVICE CERTS', at: 18, link: true, linkAt: 24 },
+        { glyph: '▣', title: 'Security Layer', tag: 'SIGNED · VERIFIED', at: 28, link: true, linkAt: 34 },
+        { glyph: '☁', title: 'Cloud Processing', tag: 'MICROSERVICES', at: 38, link: true, linkAt: 44 },
+        { glyph: '▤', title: 'Dashboard', tag: 'RBAC · AUDIT LOG', at: 48, link: false, linkAt: 0 },
+      ],
+      badges: ['UNECE WP.29 ALIGNED', 'ISO 21434 ALIGNED', 'AES-256 AT REST', 'TLS 1.3 IN TRANSIT'],
+      pillars: [
+        { label: 'Platform architecture', kicker: 'PLATFORM ARCHITECTURE', title: 'Edge-first. Cloud-native. Protocol-agnostic.', bg: '#0a0c0b', items: [
+          { title: 'Edge-First Design', body: 'Fleet hardware buffers, processes, and prioritizes data locally before cloud uplink — continuous operation during connectivity loss, lower transfer costs, no lost visibility.' },
+          { title: 'Microservices Cloud Backend', body: 'Containerized, independently deployable, horizontally scalable services — ingestion, dispatch, analytics, APIs — enabling zero-downtime updates and granular capacity scaling.' },
+          { title: 'Multi-Protocol Communication', body: 'CAN, LIN, RS485, BLE, and Ethernet-based networks. A protocol-agnostic ingestion layer normalizes data across heterogeneous vehicle types and generations.' },
+        ]},
+        { label: 'Security architecture', kicker: 'SECURITY ARCHITECTURE', title: 'No command without cryptographic verification.', bg: '#0c0f0e', items: [
+          { title: 'Encrypted Command Channels', body: 'All remote commands traverse TLS-encrypted channels with device certificate validation. Source and target identity are cryptographically verified before execution.' },
+          { title: 'Role-Based Access Control', body: 'Granular RBAC across platform and portals. Operators, supervisors, drivers, and executives see only what their role requires. Every access event is audit-logged.' },
+          { title: 'OTA Security Framework', body: 'Package signing, integrity verification, staged rollout with automated health checks, and rollback triggers — aligned to UNECE WP.29 / ISO 21434.' },
+        ]},
+        { label: 'Delivery excellence', kicker: 'DELIVERY EXCELLENCE', title: 'Transparent programs. Owned outcomes.', bg: '#0a0c0b', items: [
+          { title: 'Agile Program Governance', body: 'Two-week sprints, weekly stakeholder syncs, milestone-based reporting — full visibility without micromanagement. Pod leads own delivery accountability.' },
+          { title: 'IP Ownership & Confidentiality', body: 'Full IP transfer on all client-commissioned work. NDAs before technical disclosure. Engineers operate in client-specified repositories with strict access controls.' },
+          { title: 'Quality Gates & Code Standards', body: 'Automated quality checks, peer review, and coverage thresholds on all deliverables. MISRA C for safety-relevant embedded code; OWASP for cloud-facing APIs.' },
+        ]},
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

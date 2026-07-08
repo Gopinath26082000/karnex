@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Where Vehicles Meet Intelligence</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    html { scroll-behavior:auto; }
+    * { box-sizing:border-box; }
+    @keyframes kx-drift { 0% { transform:translateX(-8%); opacity:.5; } 50% { opacity:.9; } 100% { transform:translateX(8%); opacity:.5; } }
+    @keyframes kx-pulse { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+    @keyframes kx-dash { to { background-position-x:-240px; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <!-- ===================== NAV ===================== -->
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" />
+    </a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;" style-hover="background:#2ee06e;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ===================== SCROLL HERO ===================== -->
+  <div ref="{{ heroRef }}" data-screen-label="Hero — scroll sequence" style="height:450vh; position:relative; --p:0;">
+    <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:radial-gradient(ellipse 90% 70% at 62% 42%, #10201a 0%, #0c1210 42%, #0a0c0b 78%);">
+
+      <!-- ambient light streak -->
+      <sc-if value="{{ ambient }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute; left:-10%; right:-10%; top:58%; height:2px; background:linear-gradient(90deg, transparent, rgba(34,197,94,.28) 30%, rgba(180,255,210,.35) 55%, transparent 85%); animation:kx-drift 14s ease-in-out infinite alternate; filter:blur(1px);"></div>
+        <div style="position:absolute; left:-10%; right:-10%; top:20%; height:1px; background:linear-gradient(90deg, transparent, rgba(120,200,255,.14) 45%, transparent 80%); animation:kx-drift 22s ease-in-out infinite alternate-reverse;"></div>
+      </sc-if>
+
+      <!-- floor -->
+      <div style="position:absolute; left:0; right:0; bottom:0; height:26vh; background:linear-gradient(180deg, rgba(20,28,24,0), rgba(16,22,19,.85));"></div>
+
+      <!-- background map/route layer — stage 3+ -->
+      <div style="position:absolute; inset:0; opacity:calc(clamp(0, (var(--p) - 36) / 12, 1) * clamp(0, 1 - (var(--p) - 88) / 8, 1) * .5); background-image:linear-gradient(rgba(140,170,155,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(140,170,155,.07) 1px, transparent 1px); background-size:72px 72px; transform:perspective(900px) rotateX(38deg) scale(1.4); transform-origin:50% 100%;"></div>
+
+      <!-- route lines drawing across — stage 3 -->
+      <div style="position:absolute; left:0; top:63%; height:1px; width:calc(clamp(0, (var(--p) - 38) / 16, 1) * 100%); background:linear-gradient(90deg, transparent, rgba(34,197,94,.55) 20%, rgba(34,197,94,.25)); opacity:calc(clamp(0, (var(--p) - 38) / 8, 1) * clamp(0, 1 - (var(--p) - 90) / 6, 1));"></div>
+      <div style="position:absolute; right:0; top:34%; height:1px; width:calc(clamp(0, (var(--p) - 42) / 16, 1) * 82%); background:linear-gradient(270deg, transparent, rgba(34,197,94,.4) 30%, rgba(34,197,94,.15)); opacity:calc(clamp(0, (var(--p) - 42) / 8, 1) * clamp(0, 1 - (var(--p) - 90) / 6, 1));"></div>
+
+      <!-- ============ VEHICLE GROUP ============ -->
+      <div style="position:absolute; left:38%; right:-4%; bottom:10vh; transform:perspective(1100px) rotateY(calc(var(--tx, 0) * -1deg)) translateX(calc(clamp(0, (var(--p) - 60) / 24, 1) * -9%)) scale(calc(1 + clamp(0, var(--p) / 100, 1) * .07)); transform-origin:55% 70%;">
+        <img src="assets/car-hero.png" alt="Kaarnex intelligent vehicle" style="display:block; width:100%; mask-image:radial-gradient(ellipse 68% 72% at 50% 52%, black 48%, transparent 76%); -webkit-mask-image:radial-gradient(ellipse 68% 72% at 50% 52%, black 48%, transparent 76%);" />
+
+        <!-- wireframe scan overlay — stage 2 -->
+        <div style="position:absolute; inset:6% 8% 10% 4%; opacity:calc(clamp(0, (var(--p) - 16) / 6, 1) * clamp(0, 1 - (var(--p) - 84) / 10, 1) * .55); background-image:linear-gradient(rgba(120,255,175,.25) 1px, transparent 1px), linear-gradient(90deg, rgba(120,255,175,.25) 1px, transparent 1px); background-size:34px 34px; mask-image:linear-gradient(90deg, black calc(var(--p) * 4% - 78%), transparent calc(var(--p) * 4% - 48%)), radial-gradient(ellipse 60% 60% at 50% 50%, black 55%, transparent 80%); -webkit-mask-image:linear-gradient(90deg, black calc(var(--p) * 4% - 78%), transparent calc(var(--p) * 4% - 48%)); mix-blend-mode:screen;"></div>
+
+        <!-- scan line — stage 2 -->
+        <div style="position:absolute; top:4%; bottom:8%; width:1px; left:calc(clamp(0, (var(--p) - 16) / 26, 1) * 92% + 4%); background:linear-gradient(180deg, transparent, rgba(120,255,175,.8), transparent); opacity:calc(clamp(0, (var(--p) - 16) / 4, 1) * clamp(0, 1 - (var(--p) - 40) / 5, 1));"></div>
+
+        <!-- sensor nodes — stage 2 -->
+        <sc-if value="{{ showTelemetry }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ sensors }}" as="s" hint-placeholder-count="6">
+            <div style="position:absolute; left:{{ s.x }}; top:{{ s.y }}; opacity:calc(clamp(0, (var(--p) - {{ s.at }}) / 5, 1) * clamp(0, 1 - (var(--p) - 86) / 8, 1)); display:flex; align-items:center; gap:7px;">
+              <span style="width:7px; height:7px; border-radius:50%; background:#22c55e; box-shadow:0 0 10px rgba(34,197,94,.9); animation:kx-pulse 3.2s ease-in-out infinite;"></span>
+              <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.14em; color:#b7e8c8; background:rgba(10,14,12,.72); border:1px solid rgba(34,197,94,.25); padding:3px 7px; border-radius:2px; white-space:nowrap;">{{ s.label }}</span>
+            </div>
+          </sc-for>
+        </sc-if>
+      </div>
+
+      <!-- ============ HERO TEXT (stage 1, fades out stage 3) ============ -->
+      <div style="position:absolute; left:8%; top:0; bottom:0; width:36%; display:flex; flex-direction:column; justify-content:center; gap:24px; padding:88px 0 100px; opacity:calc(clamp(0, 1 - (var(--p) - 30) / 14, 1)); transform:translateY(calc(clamp(0, (var(--p) - 30) / 14, 1) * -30px)); pointer-events:none;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e;">MOBILITY INTELLIGENCE · FLEET + SDV</div>
+        <h1 style="margin:0; font-size:clamp(38px, 4.4vw, 64px); line-height:1.04; font-weight:600; letter-spacing:-0.015em;">Intelligence that moves with every vehicle.</h1>
+        <p style="margin:0; font-size:17px; line-height:1.6; color:#9aa39f; max-width:44ch;">Real-time fleet management for transport operators. Specialized automotive software engineering for OEMs and the SDV era. Two disciplines. One mission: eliminate blind spots between vehicles and the platforms that run them.</p>
+        <div style="display:flex; gap:14px; margin-top:6px; pointer-events:auto;">
+          <a href="Fleet.dc.html" style="background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:14px; padding:14px 24px; border-radius:3px;" style-hover="background:#2ee06e;">Explore Fleet Platform</a>
+          <a href="Contact.dc.html" style="border:1px solid rgba(255,255,255,.22); color:#eceeed; text-decoration:none; font-size:14px; padding:14px 24px; border-radius:3px;" style-hover="border-color:#22c55e; color:#b7e8c8;">Talk to Our Engineers</a>
+        </div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">SCROLL TO ACTIVATE THE INTELLIGENCE LAYER ↓</div>
+      </div>
+
+      <!-- ============ STAGE 4: FLEET PANEL (left) ============ -->
+      <div style="position:absolute; left:5%; top:50%; width:280px; transform:translateY(-50%) translateX(calc(clamp(0, 1 - (var(--p) - 62) / 12, 1) * -60px)); opacity:calc(clamp(0, (var(--p) - 62) / 10, 1)); display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:2px;">FLEET OPERATIONS</div>
+        <sc-for list="{{ fleetCards }}" as="c" hint-placeholder-count="4">
+          <div style="background:rgba(16,21,18,.82); border:1px solid rgba(255,255,255,.09); border-radius:6px; padding:14px 16px; backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+            <div>
+              <div style="font-size:12px; color:#8b9490; letter-spacing:.04em;">{{ c.label }}</div>
+              <div style="font-size:20px; font-weight:600; margin-top:4px; color:#eceeed;">{{ c.value }}</div>
+            </div>
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; color:#22c55e;">{{ c.tag }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- ============ STAGE 4: OEM PANEL (right) ============ -->
+      <div style="position:absolute; right:5%; top:50%; width:280px; transform:translateY(-50%) translateX(calc(clamp(0, 1 - (var(--p) - 62) / 12, 1) * 60px)); opacity:calc(clamp(0, (var(--p) - 62) / 10, 1)); display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:2px; text-align:right;">OEM ENGINEERING</div>
+        <sc-for list="{{ oemCards }}" as="c" hint-placeholder-count="4">
+          <div style="background:rgba(16,21,18,.82); border:1px solid rgba(255,255,255,.09); border-radius:6px; padding:14px 16px; backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+            <div>
+              <div style="font-size:12px; color:#8b9490; letter-spacing:.04em;">{{ c.label }}</div>
+              <div style="font-size:20px; font-weight:600; margin-top:4px; color:#eceeed;">{{ c.value }}</div>
+            </div>
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; color:#22c55e;">{{ c.tag }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- ============ STAGE 5: RESOLUTION CTA ============ -->
+      <div style="position:absolute; left:0; right:0; bottom:9vh; display:flex; flex-direction:column; align-items:center; gap:18px; opacity:calc(clamp(0, (var(--p) - 87) / 9, 1)); transform:translateY(calc(clamp(0, 1 - (var(--p) - 87) / 9, 1) * 26px));">
+        <div style="font-size:26px; font-weight:600; letter-spacing:-0.01em;">One vehicle. Two worlds of intelligence.</div>
+        <div style="display:flex; gap:14px;">
+          <a href="Fleet.dc.html" style="background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:14px; padding:13px 22px; border-radius:3px;" style-hover="background:#2ee06e;">Explore the Platform</a>
+          <a href="OEM.dc.html" style="border:1px solid rgba(255,255,255,.22); color:#eceeed; text-decoration:none; font-size:14px; padding:13px 22px; border-radius:3px;" style-hover="border-color:#22c55e; color:#b7e8c8;">Engineering Services</a>
+        </div>
+      </div>
+
+      <!-- stage readout + progress -->
+      <div style="position:absolute; left:40px; bottom:32px; display:flex; align-items:center; gap:14px;">
+        <div style="width:120px; height:2px; background:rgba(255,255,255,.1); border-radius:1px; overflow:hidden;">
+          <div style="height:100%; width:calc(var(--p) * 1%); background:#22c55e;"></div>
+        </div>
+        <div ref="{{ stageRef }}" style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">01 — VEHICLE REVEAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TWO VERTICALS ===================== -->
+  <section data-screen-label="Two verticals" style="padding:120px 0; background:#0a0c0b;">
+    <div style="width:min(1200px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">TWO VERTICALS · ONE MISSION</div>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em; max-width:20ch;">Built for operators and OEMs who demand more.</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+        <a href="Fleet.dc.html" style="text-decoration:none; color:inherit; background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:0 0 36px; overflow:hidden; display:block; transition:transform .4s cubic-bezier(.22,.61,.36,1), border-color .4s ease;" style-hover="border-color:rgba(34,197,94,.4); transform:translateY(-6px);">
+          <img src="assets/detail-grille.png" alt="Fleet intelligence" style="width:100%; height:200px; object-fit:cover; display:block; opacity:.85;" />
+          <div style="padding:32px 36px 0;">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:14px;">FOR OPERATORS</div>
+            <div style="font-size:24px; font-weight:600; margin-bottom:14px;">Fleet Intelligence Platform</div>
+            <p style="margin:0; font-size:15px; line-height:1.65; color:#9aa39f;">Real-time tracking, driver behavior analytics, RFID passenger boarding, SOS safety systems, and fuel intelligence — purpose-built for school buses, corporate shuttles, logistics fleets, and public transport operators.</p>
+            <div style="margin-top:22px; font-size:13px; color:#22c55e; letter-spacing:.06em;">EXPLORE PLATFORM →</div>
+          </div>
+        </a>
+        <a href="OEM.dc.html" style="text-decoration:none; color:inherit; background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:0 0 36px; overflow:hidden; display:block; transition:transform .4s cubic-bezier(.22,.61,.36,1), border-color .4s ease;" style-hover="border-color:rgba(34,197,94,.4); transform:translateY(-6px);">
+          <img src="assets/detail-shell.png" alt="SDV engineering" style="width:100%; height:200px; object-fit:cover; display:block; opacity:.85;" />
+          <div style="padding:32px 36px 0;">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:14px;">FOR OEMS &amp; TIER-1S</div>
+            <div style="font-size:24px; font-weight:600; margin-bottom:14px;">SDV / Connected Vehicle Engineering</div>
+            <p style="margin:0; font-size:15px; line-height:1.65; color:#9aa39f;">Remote feature delivery, OTA workflow management, ECU/TCU integration, HIL/SIL test automation, white-label mobile apps, and offshore engineering pods — for the next generation of software-defined vehicles.</p>
+            <div style="margin-top:22px; font-size:13px; color:#22c55e; letter-spacing:.06em;">ENGINEERING SERVICES →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY KAARNEX ===================== -->
+  <section data-screen-label="Why Kaarnex" style="padding:120px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">WHY KAARNEX</div>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em;">Three proof points.</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px;">
+        <sc-for list="{{ proofPoints }}" as="pt" hint-placeholder-count="3">
+          <div style="border-top:1px solid rgba(34,197,94,.35); padding-top:28px;">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:12px; color:#22c55e; margin-bottom:16px;">{{ pt.num }}</div>
+            <div style="font-size:20px; font-weight:600; margin-bottom:14px;">{{ pt.title }}</div>
+            <p style="margin:0; font-size:14.5px; line-height:1.65; color:#9aa39f;">{{ pt.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INDUSTRIES ===================== -->
+  <section data-screen-label="Industries served" style="padding:120px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:grid; grid-template-columns:1fr 1.4fr; gap:64px; align-items:start;">
+      <div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">INDUSTRIES SERVED</div>
+        <h2 style="margin:0; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em;">Every fleet. Every vehicle program.</h2>
+        <a href="Industries.dc.html" style="display:inline-block; margin-top:28px; font-size:13px; color:#22c55e; text-decoration:none; letter-spacing:.06em;">SEE USE CASES →</a>
+      </div>
+      <div style="display:flex; flex-direction:column;">
+        <sc-for list="{{ industries }}" as="ind" hint-placeholder-count="6">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding:20px 4px; border-bottom:1px solid rgba(255,255,255,.07);">
+            <div style="font-size:17px; font-weight:500;">{{ ind.name }}</div>
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; color:#5c655f; letter-spacing:.1em; white-space:nowrap;">{{ ind.tag }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA STRIP ===================== -->
+  <section data-screen-label="CTA strip" style="padding:130px 0; background:radial-gradient(ellipse 70% 90% at 50% 110%, rgba(34,197,94,.14), rgba(10,12,11,0) 60%), #0c0f0e; border-top:1px solid rgba(255,255,255,.06); text-align:center;">
+    <div style="width:min(760px, 88vw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:26px;">
+      <h2 style="margin:0; font-size:clamp(28px, 2.8vw, 40px); font-weight:600; letter-spacing:-0.015em;">Ready to bring your fleet or vehicle program into the intelligence era?</h2>
+      <a href="Contact.dc.html" style="background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:15px; padding:16px 30px; border-radius:3px;" style-hover="background:#2ee06e;">Schedule a Discovery Call →</a>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="padding:56px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:26px; opacity:.85;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+      <div style="display:flex; gap:20px; font-size:12px;">
+        <a href="About.dc.html" style="color:#8b9490; text-decoration:none;">About</a>
+        <a href="Contact.dc.html" style="color:#8b9490; text-decoration:none;">Contact</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroLength&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:450,&quot;min&quot;:250,&quot;max&quot;:700,&quot;step&quot;:25,&quot;unit&quot;:&quot;vh&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;showTelemetry&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;ambient&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._update(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this._applyLength();
+    this._update();
+    this._setupReveal();
+    this._setupTilt();
+  }
+  _setupReveal() {
+    const els = Array.from(document.querySelectorAll('section > div'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0px)';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1)';
+      io.observe(el);
+    });
+    this._io = io;
+  }
+  _setupTilt() {
+    this._tx = 0;
+    this._txTarget = 0;
+    this._onMove = (e) => {
+      this._txTarget = ((e.clientX / window.innerWidth) - 0.5) * 5;
+      if (!this._tiltRaf) this._tiltStep();
+    };
+    window.addEventListener('mousemove', this._onMove, { passive: true });
+  }
+  _tiltStep() {
+    this._tiltRaf = requestAnimationFrame(() => {
+      this._tx += (this._txTarget - this._tx) * 0.06;
+      if (this._hero) this._hero.style.setProperty('--tx', this._tx.toFixed(3));
+      if (Math.abs(this._txTarget - this._tx) > 0.005) this._tiltStep();
+      else this._tiltRaf = null;
+    });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._io) this._io.disconnect();
+    if (this._onMove) window.removeEventListener('mousemove', this._onMove);
+    if (this._tiltRaf) cancelAnimationFrame(this._tiltRaf);
+  }
+  componentDidUpdate() { this._applyLength(); }
+  _applyLength() {
+    if (this._hero) this._hero.style.height = (this.props.heroLength ?? 450) + 'vh';
+  }
+  _update() {
+    const hero = this._hero;
+    if (!hero) return;
+    const vh = window.innerHeight;
+    const total = Math.max(1, hero.offsetHeight - vh);
+    const y = -hero.getBoundingClientRect().top;
+    const p = Math.max(0, Math.min(1, y / total)) * 100;
+    hero.style.setProperty('--p', p.toFixed(2));
+    const stage = p < 15 ? '01 — VEHICLE REVEAL'
+      : p < 38 ? '02 — INTELLIGENCE LAYER'
+      : p < 62 ? '03 — ROUTE & FLEET DATA'
+      : p < 87 ? '04 — FLEET × OEM'
+      : '05 — RESOLUTION';
+    if (this._stage && this._stage.textContent !== stage) this._stage.textContent = stage;
+  }
+  renderVals() {
+    return {
+      heroRef: (el) => { this._hero = el; if (el) { this._applyLength(); this._update(); } },
+      stageRef: (el) => { this._stage = el; },
+      ambient: this.props.ambient ?? true,
+      showTelemetry: this.props.showTelemetry ?? true,
+      sensors: [
+        { label: 'GPS · LOCKED', x: '12%', y: '38%', at: 18 },
+        { label: 'TCU · ONLINE', x: '46%', y: '10%', at: 21 },
+        { label: 'CAN · 500 KB/S', x: '38%', y: '58%', at: 24 },
+        { label: 'RFID · ARMED', x: '60%', y: '40%', at: 27 },
+        { label: 'OTA · READY', x: '78%', y: '18%', at: 30 },
+        { label: 'SOS · STANDBY', x: '20%', y: '72%', at: 33 },
+      ],
+      fleetCards: [
+        { label: 'Fleet health', value: '98.2%', tag: 'LIVE' },
+        { label: 'Driver score — avg', value: '87 / 100', tag: 'TODAY' },
+        { label: 'Route compliance', value: '99.1%', tag: 'SLA' },
+        { label: 'RFID boardings', value: '4,218', tag: 'AM SHIFT' },
+      ],
+      oemCards: [
+        { label: 'OTA campaign', value: 'Wave 3 / 5', tag: 'ROLLOUT' },
+        { label: 'ECU diagnostics', value: '0 DTC', tag: 'CLEAR' },
+        { label: 'HIL regression', value: '1,142 pass', tag: 'CI' },
+        { label: 'Cloud sync', value: '42 ms', tag: 'P99' },
+      ],
+      proofPoints: [
+        { num: '01', title: 'Depth over breadth', body: 'We operate exclusively in mobility. Every engineer, every product, every deployment is automotive — no dilution from unrelated domains. That specialization translates directly into faster delivery and fewer integration surprises.' },
+        { num: '02', title: "India's engineering advantage, without the trade-offs", body: 'Enterprise-grade automotive software from India — with full program transparency, timezone-aligned collaboration, and engineering accountability that matches global OEM standards.' },
+        { num: '03', title: 'Platform thinking, not ticket-fixing', body: 'Our fleet platform is built from real-world operator deployments. Our engineering services feed learnings back into reusable accelerators and OTA frameworks — every engagement makes the next one faster.' },
+      ],
+      industries: [
+        { name: 'School & Student Transport Operators', tag: 'RFID · SOS' },
+        { name: 'Corporate Employee Shuttle Programs', tag: 'SLA · SAFETY' },
+        { name: 'Logistics & Last-Mile Delivery Fleets', tag: 'FUEL · ROUTES' },
+        { name: 'Public Transport & Bus Rapid Transit', tag: 'MULTI-DEPOT' },
+        { name: 'Global Automotive OEMs & Tier-1 Suppliers', tag: 'OTA · ECU' },
+        { name: 'Mobility Tech Startups & EV Platforms', tag: 'FULL-STACK' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

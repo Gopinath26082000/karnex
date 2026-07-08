@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Contact & Discovery</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    * { box-sizing:border-box; }
+    input:focus, textarea:focus, select:focus { outline:none; border-color:rgba(34,197,94,.6) !important; }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center;"><img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" /></a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header data-screen-label="Contact hero" style="padding:190px 0 70px; background:radial-gradient(ellipse 80% 60% at 50% 0%, #0e1512 0%, #0a0c0b 70%); text-align:center;">
+    <div style="width:min(820px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:20px;">CONTACT &amp; DISCOVERY</div>
+      <h1 style="margin:0; font-size:clamp(34px, 4vw, 56px); line-height:1.08; font-weight:600; letter-spacing:-0.015em;">The right conversation starts here.</h1>
+      <p style="margin:22px auto 0; font-size:16.5px; line-height:1.6; color:#9aa39f; max-width:60ch;">Managing a fleet of 50 vehicles or engineering a connected feature for a global OEM — we want to understand your program and show you what Kaarnex can do.</p>
+    </div>
+  </header>
+
+  <!-- ============ TWO PATHS + FORM ============ -->
+  <section data-screen-label="Discovery form" style="padding:30px 0 130px; background:#0a0c0b;">
+    <div style="width:min(880px, 88vw); margin:0 auto;">
+
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <!-- two-path selector -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:36px;">
+          <button onClick="{{ pickFleet }}" style="cursor:pointer; text-align:left; background:{{ fleetBg }}; border:1px solid {{ fleetBorder }}; border-radius:10px; padding:28px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; color:#eceeed;" style-hover="border-color:rgba(34,197,94,.5);">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:12px;">FOR FLEET OPERATORS</div>
+            <div style="font-size:18px; font-weight:600; margin-bottom:8px;">Book a live platform demo</div>
+            <div style="font-size:13.5px; line-height:1.6; color:#9aa39f;">We'll map Kaarnex Fleet Intelligence to your vehicle types, routes, and compliance requirements. No generic slides — your fleet, your use case.</div>
+          </button>
+          <button onClick="{{ pickOem }}" style="cursor:pointer; text-align:left; background:{{ oemBg }}; border:1px solid {{ oemBorder }}; border-radius:10px; padding:28px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; color:#eceeed;" style-hover="border-color:rgba(34,197,94,.5);">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:12px;">FOR OEMS &amp; ENGINEERING LEADERS</div>
+            <div style="font-size:18px; font-weight:600; margin-bottom:8px;">Submit an engineering brief</div>
+            <div style="font-size:13.5px; line-height:1.6; color:#9aa39f;">Tell us your program, capabilities needed, and timeline. We'll respond with a team profile and engagement model within 48 hours.</div>
+          </button>
+        </div>
+
+        <!-- form -->
+        <div style="background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:44px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">NAME</label>
+              <input type="text" placeholder="Your name" style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">COMPANY</label>
+              <input type="text" placeholder="Company" style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">ROLE / TITLE</label>
+              <input type="text" placeholder="Role or title" style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">COUNTRY / REGION</label>
+              <input type="text" placeholder="Country or region" style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">ENQUIRY TYPE</label>
+              <select style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;">
+                <option>Fleet Platform</option>
+                <option>Engineering Services</option>
+                <option>Partnership</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">TIMELINE / URGENCY</label>
+              <select style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit;">
+                <option>Exploring — no fixed date</option>
+                <option>Within 3 months</option>
+                <option>Within 6 weeks</option>
+                <option>Urgent — this month</option>
+              </select>
+            </div>
+            <div style="grid-column:1 / -1; display:flex; flex-direction:column; gap:8px;">
+              <label style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#8b9490;">TELL US ABOUT YOUR PROGRAM</label>
+              <textarea rows="5" placeholder="{{ programPlaceholder }}" style="background:rgba(10,13,11,.8); border:1px solid rgba(255,255,255,.12); border-radius:4px; padding:13px 14px; color:#eceeed; font-size:14px; font-family:inherit; resize:vertical;"></textarea>
+            </div>
+          </div>
+          <button onClick="{{ submit }}" style="cursor:pointer; margin-top:28px; background:#22c55e; border:none; color:#0a0c0b; font-weight:600; font-size:15px; padding:16px 30px; border-radius:3px; font-family:inherit;" style-hover="background:#2ee06e; box-shadow:0 0 24px rgba(34,197,94,.35);">{{ submitLabel }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(34,197,94,.4); border-radius:10px; padding:70px 44px; text-align:center;">
+          <div style="width:56px; height:56px; border-radius:50%; border:2px solid #22c55e; color:#22c55e; font-size:26px; display:flex; align-items:center; justify-content:center; margin:0 auto 22px;">✓</div>
+          <div style="font-size:24px; font-weight:600; margin-bottom:12px;">Received. We'll be in touch within 48 hours.</div>
+          <p style="margin:0 auto; font-size:15px; line-height:1.6; color:#9aa39f; max-width:48ch;">Your enquiry is routed to the right team — fleet or engineering. Check business@kaarnex.com for confirmation.</p>
+          <button onClick="{{ reset }}" style="cursor:pointer; margin-top:26px; background:transparent; border:1px solid rgba(255,255,255,.2); color:#aab3af; font-size:13px; padding:11px 20px; border-radius:3px; font-family:inherit;" style-hover="border-color:#22c55e; color:#b7e8c8;">Send another enquiry</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT DETAILS ============ -->
+  <section data-screen-label="Contact details" style="padding:100px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px;">
+      <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="4">
+        <div style="border-top:1px solid rgba(34,197,94,.35); padding-top:24px;">
+          <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#22c55e; margin-bottom:12px;">{{ c.label }}</div>
+          <div style="font-size:15px; line-height:1.6; color:#cfd6d2; white-space:pre-line;">{{ c.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="padding:70px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06); text-align:center;">
+    <div style="width:min(900px, 88vw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:30px; opacity:.9;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { path: 'fleet', submitted: false };
+  renderVals() {
+    const fleet = this.state.path === 'fleet';
+    return {
+      notSubmitted: !this.state.submitted,
+      submitted: this.state.submitted,
+      pickFleet: () => this.setState({ path: 'fleet' }),
+      pickOem: () => this.setState({ path: 'oem' }),
+      fleetBg: fleet ? 'rgba(34,197,94,.08)' : 'rgba(16,21,18,.6)',
+      fleetBorder: fleet ? 'rgba(34,197,94,.55)' : 'rgba(255,255,255,.09)',
+      oemBg: !fleet ? 'rgba(34,197,94,.08)' : 'rgba(16,21,18,.6)',
+      oemBorder: !fleet ? 'rgba(34,197,94,.55)' : 'rgba(255,255,255,.09)',
+      programPlaceholder: fleet
+        ? 'Fleet size, vehicle types, routes, compliance requirements…'
+        : 'Vehicle program, capabilities needed, timeline…',
+      submitLabel: fleet ? 'Book a Fleet Demo →' : 'Request an Engineering Brief →',
+      submit: () => this.setState({ submitted: true }),
+      reset: () => this.setState({ submitted: false }),
+      contacts: [
+        { label: 'HEADQUARTERS', value: 'Kaarnex Technologies Pvt. Ltd.\nIndia' },
+        { label: 'BUSINESS ENQUIRIES', value: 'business@kaarnex.com\nlinkedin.com/company/kaarnex' },
+        { label: 'TECHNICAL & SUPPORT', value: 'support@kaarnex.com' },
+        { label: 'PARTNERSHIP & INVESTMENT', value: 'partners@kaarnex.com' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

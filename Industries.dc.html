@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Industries & Use Cases</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    * { box-sizing:border-box; }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center;"><img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" /></a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#eceeed; text-decoration:none; border-bottom:1px solid #22c55e; padding-bottom:3px;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;" style-hover="background:#2ee06e;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header data-screen-label="Industries hero" style="padding:190px 0 90px; background:radial-gradient(ellipse 80% 60% at 50% 0%, #0e1512 0%, #0a0c0b 70%); text-align:center;">
+    <div style="width:min(860px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:20px;">INDUSTRIES &amp; USE CASES</div>
+      <h1 style="margin:0; font-size:clamp(34px, 4vw, 56px); line-height:1.08; font-weight:600; letter-spacing:-0.015em;">Every fleet. Every vehicle program. One intelligence layer.</h1>
+      <p style="margin:22px auto 0; font-size:16.5px; line-height:1.6; color:#9aa39f; max-width:62ch;">Kaarnex serves transport operators managing thousands of vehicles and automotive engineers building the next generation of connected cars. Here's where we fit.</p>
+    </div>
+  </header>
+
+  <!-- ============ SELECTOR ============ -->
+  <section data-screen-label="Use case explorer" style="padding:40px 0 130px; background:#0a0c0b;">
+    <div style="width:min(1100px, 88vw); margin:0 auto;">
+
+      <div style="display:flex; justify-content:center; gap:8px; margin-bottom:44px;">
+        <button onClick="{{ pickFleet }}" style="cursor:pointer; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.16em; padding:12px 22px; border-radius:3px; border:1px solid {{ fleetTabBorder }}; background:{{ fleetTabBg }}; color:{{ fleetTabColor }};">FLEET INTELLIGENCE</button>
+        <button onClick="{{ pickSdv }}" style="cursor:pointer; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.16em; padding:12px 22px; border-radius:3px; border:1px solid {{ sdvTabBorder }}; background:{{ sdvTabBg }}; color:{{ sdvTabColor }};">SDV ENGINEERING</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:280px 1fr; gap:32px; align-items:start;">
+        <!-- industry list -->
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <sc-for list="{{ currentList }}" as="u" hint-placeholder-count="4">
+            <button onClick="{{ u.pick }}" style="cursor:pointer; text-align:left; background:{{ u.bg }}; border:1px solid {{ u.border }}; border-radius:6px; padding:16px 18px; color:{{ u.color }}; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:15px; font-weight:500;" style-hover="border-color:rgba(34,197,94,.4);">{{ u.name }}</button>
+          </sc-for>
+        </div>
+
+        <!-- detail card -->
+        <div style="background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:44px;">
+          <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; margin-bottom:16px;">{{ active.tag }}</div>
+          <h2 style="margin:0 0 18px; font-size:26px; font-weight:600; letter-spacing:-0.01em;">{{ active.name }}</h2>
+          <p style="margin:0 0 30px; font-size:15.5px; line-height:1.7; color:#aab3af;">{{ active.body }}</p>
+          <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#5c655f; margin-bottom:14px;">KEY OUTCOMES</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <sc-for list="{{ active.outcomes }}" as="o" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#cfd6d2;">
+                <span style="width:6px; height:6px; border-radius:50%; background:#22c55e; flex-shrink:0;"></span>
+                <span>{{ o }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <a href="{{ active.href }}" style="display:inline-block; margin-top:32px; font-size:13px; color:#22c55e; text-decoration:none; letter-spacing:.06em;">{{ active.cta }} →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section data-screen-label="Industries CTA" style="padding:120px 0; background:radial-gradient(ellipse 70% 90% at 50% 110%, rgba(34,197,94,.14), rgba(10,12,11,0) 60%), #0c0f0e; border-top:1px solid rgba(255,255,255,.06); text-align:center;">
+    <div style="width:min(760px, 88vw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <h2 style="margin:0; font-size:clamp(28px, 2.8vw, 40px); font-weight:600; letter-spacing:-0.015em;">Don't see your fleet or program?</h2>
+      <p style="margin:0; font-size:16px; line-height:1.6; color:#9aa39f;">If it moves and it matters, we can make it intelligent. Tell us about your operation.</p>
+      <a href="Contact.dc.html" style="margin-top:8px; background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:15px; padding:16px 30px; border-radius:3px;" style-hover="background:#2ee06e;">Schedule a Discovery Call →</a>
+    </div>
+  </section>
+
+  <footer style="padding:56px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:26px; opacity:.85;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+      <div style="display:flex; gap:20px; font-size:12px;">
+        <a href="About.dc.html" style="color:#8b9490; text-decoration:none;">About</a>
+        <a href="Contact.dc.html" style="color:#8b9490; text-decoration:none;">Contact</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'fleet', idx: 0 };
+  _data() {
+    return {
+      fleet: [
+        { tag: 'FLEET · SAFETY-CRITICAL', name: 'School & Student Transport', body: 'The stakes are highest when children are in the vehicle. RFID-based student boarding, real-time route tracking, and instant parent notifications satisfy both safety compliance mandates and parent trust. Panic SOS gives drivers immediate emergency escalation without taking hands off the wheel.', outcomes: ['Zero unaccounted students', 'Real-time parent alerts', 'Route SLA compliance', 'Regulatory audit readiness'], href: 'Fleet.dc.html', cta: 'EXPLORE FLEET PLATFORM' },
+        { tag: 'FLEET · WORKFORCE MOBILITY', name: 'Corporate Employee Shuttles', body: 'Employee transport demands punctuality, route optimization, and safety reporting for HR and admin teams. Live shuttle tracking, attendance logging, route efficiency analytics, and incident response in a single platform — with APIs into corporate HR and ERP systems.', outcomes: ['On-time performance tracking', 'Female employee safety compliance', 'Attendance audit trails', 'Fuel cost reduction'], href: 'Fleet.dc.html', cta: 'EXPLORE FLEET PLATFORM' },
+        { tag: 'FLEET · MARGIN-CRITICAL', name: 'Logistics & Last-Mile Delivery', body: 'Where every kilometer translates directly to margin: route performance tracking, driver behavior scoring, fuel monitoring, and SLA compliance reporting. Idle-time reduction and route optimization typically cover platform cost within the first operating quarter.', outcomes: ['Delivery SLA visibility', 'Fuel savings 8–15%', 'Driver accountability', 'Reduced maintenance intervals'], href: 'Fleet.dc.html', cta: 'EXPLORE FLEET PLATFORM' },
+        { tag: 'FLEET · PUBLIC SCALE', name: 'Public Transport & BRT', body: 'Bus rapid transit and public fleets need schedule adherence, passenger load visibility, and safety incident management at scale. Multi-depot operations with centralized dispatch visibility, route deviation alerts, and compliance reporting for transport authorities.', outcomes: ['Schedule adherence dashboards', 'Passenger incident logs', 'Government compliance reports', 'Multi-depot command visibility'], href: 'Fleet.dc.html', cta: 'EXPLORE FLEET PLATFORM' },
+      ],
+      sdv: [
+        { tag: 'SDV · GLOBAL PROGRAMS', name: 'Global OEM Connected Vehicle Programs', body: 'OEMs scaling connected programs face an engineering capacity crunch — in-house teams cannot absorb backend APIs, OTA infrastructure, remote features, and test automation simultaneously. Kaarnex pods slot into program workflows with pre-vetted automotive engineers, cutting time-to-team from months to weeks.', outcomes: ['Faster time-to-feature', 'Consistent delivery cadence', 'IP retained by client', 'Cost-efficient offshore execution'], href: 'OEM.dc.html', cta: 'EXPLORE ENGINEERING SERVICES' },
+        { tag: 'SDV · PRODUCT LINES', name: 'Tier-1 Supplier Software Divisions', body: 'Tier-1s building telematics modules, infotainment units, or V2X platforms need flexible engineering augmentation for feature validation, protocol integration, and test automation. Kaarnex provides HIL/SIL frameworks and integration engineering for ECU and TCU product lines.', outcomes: ['Faster product validation', 'Reduced QA overhead', 'Automated regression coverage', 'Integration risk reduction'], href: 'OEM.dc.html', cta: 'EXPLORE ENGINEERING SERVICES' },
+        { tag: 'SDV · VELOCITY', name: 'EV & Mobility Tech Startups', body: 'EV startups often build outstanding hardware but face software bandwidth constraints — cloud backend, OTA, and mobile app layers in particular. Kaarnex delivers full-stack connected vehicle software without requiring you to build internal teams from scratch.', outcomes: ['Product launch acceleration', 'Scalable engineering capacity', 'OEM-grade delivery quality', 'Reduced time-to-market'], href: 'OEM.dc.html', cta: 'EXPLORE ENGINEERING SERVICES' },
+      ],
+    };
+  }
+  renderVals() {
+    const data = this._data();
+    const tab = this.state.tab;
+    const list = data[tab];
+    const idx = Math.min(this.state.idx, list.length - 1);
+    const activeTab = { border: 'rgba(34,197,94,.6)', bg: 'rgba(34,197,94,.12)', color: '#b7e8c8' };
+    const idleTab = { border: 'rgba(255,255,255,.14)', bg: 'transparent', color: '#8b9490' };
+    const f = tab === 'fleet' ? activeTab : idleTab;
+    const s = tab === 'sdv' ? activeTab : idleTab;
+    return {
+      pickFleet: () => this.setState({ tab: 'fleet', idx: 0 }),
+      pickSdv: () => this.setState({ tab: 'sdv', idx: 0 }),
+      fleetTabBorder: f.border, fleetTabBg: f.bg, fleetTabColor: f.color,
+      sdvTabBorder: s.border, sdvTabBg: s.bg, sdvTabColor: s.color,
+      currentList: list.map((u, i) => ({
+        name: u.name,
+        pick: () => this.setState({ idx: i }),
+        bg: i === idx ? 'rgba(34,197,94,.1)' : 'rgba(16,21,18,.6)',
+        border: i === idx ? 'rgba(34,197,94,.5)' : 'rgba(255,255,255,.08)',
+        color: i === idx ? '#eceeed' : '#9aa39f',
+      })),
+      active: list[idx],
+    };
+  }
+}
+</script>
+</body>
+</html>

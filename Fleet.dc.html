@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Fleet Intelligence Platform</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    * { box-sizing:border-box; }
+    @keyframes kx-pulse { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+    @keyframes kx-sos { 0%,100% { box-shadow:0 0 0 0 rgba(239,68,68,.5); } 50% { box-shadow:0 0 0 12px rgba(239,68,68,0); } }
+    @keyframes kx-veh1 { 0% { offset-distance:0%; } 100% { offset-distance:100%; } }
+    @keyframes kx-dotA { 0% { left:6%; top:72%; } 45% { left:38%; top:52%; } 100% { left:64%; top:30%; } }
+    @keyframes kx-dotB { 0% { left:80%; top:24%; } 55% { left:56%; top:48%; } 100% { left:30%; top:66%; } }
+    @keyframes kx-dotC { 0% { left:20%; top:30%; } 100% { left:70%; top:64%; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center;"><img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" /></a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#eceeed; text-decoration:none; border-bottom:1px solid #22c55e; padding-bottom:3px;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;" style-hover="background:#2ee06e;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ============ SCROLL HERO: COMMAND CENTER WAKE-UP ============ -->
+  <div ref="{{ heroRef }}" data-screen-label="Fleet hero — command center" style="height:320vh; position:relative; --p:0;">
+    <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:radial-gradient(ellipse 80% 70% at 50% 30%, #0d1512 0%, #0a0c0b 70%);">
+
+      <!-- top-down map -->
+      <div style="position:absolute; inset:0; opacity:calc(.25 + clamp(0, var(--p) / 20, 1) * .5);">
+        <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(140,170,155,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(140,170,155,.08) 1px, transparent 1px); background-size:64px 64px;"></div>
+        <!-- route lines drawing -->
+        <div style="position:absolute; left:6%; top:72%; width:calc(clamp(0, (var(--p) - 8) / 18, 1) * 62%); height:1.5px; background:linear-gradient(90deg, rgba(34,197,94,.6), rgba(34,197,94,.2)); transform:rotate(-22deg); transform-origin:0 0; box-shadow:0 0 8px rgba(34,197,94,.3);"></div>
+        <div style="position:absolute; left:80%; top:24%; width:calc(clamp(0, (var(--p) - 14) / 18, 1) * 58%); height:1.5px; background:linear-gradient(90deg, rgba(34,197,94,.5), rgba(34,197,94,.15)); transform:rotate(140deg); transform-origin:0 0;"></div>
+        <div style="position:absolute; left:20%; top:30%; width:calc(clamp(0, (var(--p) - 20) / 18, 1) * 60%); height:1.5px; background:linear-gradient(90deg, rgba(140,170,155,.4), rgba(140,170,155,.1)); transform:rotate(34deg); transform-origin:0 0;"></div>
+        <!-- vehicle dots -->
+        <div style="position:absolute; width:9px; height:9px; border-radius:50%; background:#22c55e; box-shadow:0 0 12px rgba(34,197,94,.9); animation:kx-dotA 26s linear infinite alternate; opacity:calc(clamp(0, (var(--p) - 12) / 8, 1));"></div>
+        <div style="position:absolute; width:9px; height:9px; border-radius:50%; background:#22c55e; box-shadow:0 0 12px rgba(34,197,94,.9); animation:kx-dotB 32s linear infinite alternate; opacity:calc(clamp(0, (var(--p) - 16) / 8, 1));"></div>
+        <div style="position:absolute; width:8px; height:8px; border-radius:50%; background:#9fb3a8; box-shadow:0 0 8px rgba(160,180,170,.7); animation:kx-dotC 38s linear infinite alternate; opacity:calc(clamp(0, (var(--p) - 20) / 8, 1));"></div>
+        <!-- SOS pulse -->
+        <div style="position:absolute; left:68%; top:58%; width:10px; height:10px; border-radius:50%; background:#ef4444; animation:kx-sos 2.4s ease-out infinite; opacity:calc(clamp(0, (var(--p) - 46) / 6, 1) * clamp(0, 1 - (var(--p) - 62) / 6, 1));"></div>
+        <div style="position:absolute; left:70%; top:55%; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.14em; color:#fca5a5; background:rgba(24,10,10,.8); border:1px solid rgba(239,68,68,.35); padding:3px 8px; border-radius:2px; opacity:calc(clamp(0, (var(--p) - 46) / 6, 1) * clamp(0, 1 - (var(--p) - 62) / 6, 1));">SOS · VEHICLE KA-0412 · RESPONDING</div>
+      </div>
+
+      <!-- headline -->
+      <div style="position:absolute; left:8%; top:0; bottom:0; width:40%; display:flex; flex-direction:column; justify-content:center; gap:22px; padding:88px 0 100px; opacity:calc(clamp(0, 1 - (var(--p) - 34) / 14, 1)); transform:translateY(calc(clamp(0, (var(--p) - 34) / 14, 1) * -26px)); pointer-events:none;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e;">FLEET INTELLIGENCE PLATFORM</div>
+        <h1 style="margin:0; font-size:clamp(36px, 4vw, 58px); line-height:1.05; font-weight:600; letter-spacing:-0.015em;">Total fleet visibility. Zero blind spots.</h1>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:#9aa39f; max-width:46ch;">One platform to track, manage, and optimize every vehicle in your operation — in real time. GPS dots on a map are not enough; Kaarnex closes the gap between data and action.</p>
+        <div style="pointer-events:auto;"><a href="Contact.dc.html" style="display:inline-block; background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:14px; padding:14px 24px; border-radius:3px;" style-hover="background:#2ee06e;">Book a Fleet Demo</a></div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">SCROLL — THE COMMAND CENTER WAKES UP ↓</div>
+      </div>
+
+      <!-- dashboard cards, staged in from right -->
+      <div style="position:absolute; right:5%; top:50%; width:300px; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.2em; color:#22c55e; opacity:calc(clamp(0, (var(--p) - 26) / 8, 1));">LIVE OPERATIONS</div>
+        <sc-for list="{{ liveCards }}" as="c" hint-placeholder-count="5">
+          <div style="background:rgba(16,21,18,.85); border:1px solid rgba(255,255,255,.09); border-radius:6px; padding:14px 16px; backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:baseline; gap:12px; opacity:calc(clamp(0, (var(--p) - {{ c.at }}) / 8, 1)); transform:translateX(calc(clamp(0, 1 - (var(--p) - {{ c.at }}) / 8, 1) * 40px));">
+            <div>
+              <div style="font-size:12px; color:#8b9490; letter-spacing:.04em;">{{ c.label }}</div>
+              <div style="font-size:20px; font-weight:600; margin-top:4px;">{{ c.value }}</div>
+            </div>
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; color:#22c55e;">{{ c.tag }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- resolution line -->
+      <div style="position:absolute; left:0; right:0; bottom:10vh; text-align:center; opacity:calc(clamp(0, (var(--p) - 80) / 12, 1));">
+        <div style="font-size:24px; font-weight:600;">Every vehicle, driver, route, and passenger — one dashboard.</div>
+      </div>
+
+      <div style="position:absolute; left:40px; bottom:32px; display:flex; align-items:center; gap:14px;">
+        <div style="width:120px; height:2px; background:rgba(255,255,255,.1); border-radius:1px; overflow:hidden;"><div style="height:100%; width:calc(var(--p) * 1%); background:#22c55e;"></div></div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">FLEET COMMAND CENTER</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROBLEM ============ -->
+  <section data-screen-label="Problem" style="padding:110px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(900px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">THE PROBLEM WE SOLVE</div>
+      <p style="margin:0; font-size:clamp(20px, 2vw, 27px); line-height:1.55; font-weight:400; color:#cfd6d2;">Most fleet operators rely on fragmented tools: one vendor for GPS, another for driver scoring, another for reporting. The result is delays, data silos, and decisions made on incomplete information. <span style="color:#22c55e;">Kaarnex consolidates everything into one connected platform</span> — purpose-built for transport and mobility fleets in India and emerging markets.</p>
+    </div>
+  </section>
+
+  <!-- ============ MODULES ============ -->
+  <section data-screen-label="Platform modules" style="padding:120px 0; background:#0a0c0b;">
+    <div style="width:min(1200px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">CORE PLATFORM MODULES</div>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em;">Seven modules. One command center.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="7">
+          <div style="background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:28px; transition:transform .35s ease, border-color .35s ease;" style-hover="border-color:rgba(34,197,94,.35); transform:translateY(-5px);">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#22c55e; margin-bottom:14px;">{{ m.tag }}</div>
+            <div style="font-size:18px; font-weight:600; margin-bottom:12px;">{{ m.title }}</div>
+            <p style="margin:0; font-size:14px; line-height:1.65; color:#9aa39f;">{{ m.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECH STACK ============ -->
+  <section data-screen-label="Technology stack" style="padding:70px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-right:18px;">TECHNOLOGY STACK</div>
+      <sc-for list="{{ stack }}" as="t" hint-placeholder-count="9">
+        <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.06em; color:#aab3af; border:1px solid rgba(255,255,255,.12); padding:7px 12px; border-radius:3px; white-space:nowrap;">{{ t }}</span>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ DEPLOYMENT ============ -->
+  <section data-screen-label="Deployment model" style="padding:120px 0; background:#0a0c0b;">
+    <div style="width:min(1200px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">DEPLOYMENT MODEL</div>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em;">Turnkey — from hardware to insight.</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px;">
+        <sc-for list="{{ deploy }}" as="d" hint-placeholder-count="3">
+          <div style="border-top:1px solid rgba(34,197,94,.35); padding-top:28px;">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:12px; color:#22c55e; margin-bottom:16px;">{{ d.num }}</div>
+            <div style="font-size:19px; font-weight:600; margin-bottom:14px;">{{ d.title }}</div>
+            <p style="margin:0; font-size:14.5px; line-height:1.65; color:#9aa39f;">{{ d.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section data-screen-label="Fleet CTA" style="padding:130px 0; background:radial-gradient(ellipse 70% 90% at 50% 110%, rgba(34,197,94,.14), rgba(10,12,11,0) 60%), #0c0f0e; border-top:1px solid rgba(255,255,255,.06); text-align:center;">
+    <div style="width:min(760px, 88vw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <h2 style="margin:0; font-size:clamp(28px, 2.8vw, 40px); font-weight:600; letter-spacing:-0.015em;">See the platform in action.</h2>
+      <p style="margin:0; font-size:16px; line-height:1.6; color:#9aa39f;">Request a live demo — we'll map the platform to your fleet's specific routes, vehicle types, and compliance requirements.</p>
+      <a href="Contact.dc.html" style="margin-top:8px; background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:15px; padding:16px 30px; border-radius:3px;" style-hover="background:#2ee06e;">Book a Fleet Demo →</a>
+    </div>
+  </section>
+
+  <footer style="padding:56px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:26px; opacity:.85;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+      <div style="display:flex; gap:20px; font-size:12px;">
+        <a href="About.dc.html" style="color:#8b9490; text-decoration:none;">About</a>
+        <a href="Contact.dc.html" style="color:#8b9490; text-decoration:none;">Contact</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._update(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this._update();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+  _update() {
+    const hero = this._hero;
+    if (!hero) return;
+    const vh = window.innerHeight;
+    const total = Math.max(1, hero.offsetHeight - vh);
+    const y = -hero.getBoundingClientRect().top;
+    const p = Math.max(0, Math.min(1, y / total)) * 100;
+    hero.style.setProperty('--p', p.toFixed(2));
+  }
+  renderVals() {
+    return {
+      heroRef: (el) => { this._hero = el; if (el) this._update(); },
+      liveCards: [
+        { label: 'Vehicles online', value: '312 / 318', tag: 'GPS', at: 28 },
+        { label: 'Driver score — fleet avg', value: '87 / 100', tag: 'TODAY', at: 36 },
+        { label: 'Route compliance', value: '99.1%', tag: 'SLA', at: 44 },
+        { label: 'RFID boardings', value: '4,218', tag: 'AM SHIFT', at: 52 },
+        { label: 'Fuel anomalies', value: '2 flagged', tag: 'REVIEW', at: 60 },
+      ],
+      stack: ['GPS + IMU nodes', 'RFID hardware', '4G cloud uplink', 'Edge hub', 'BLE / RS485', 'Cloud microservices', 'Real-time analytics', 'Secure DevOps', 'REST APIs — ERP/HR'],
+      modules: [
+        { tag: 'TRACKING', title: 'Real-Time Fleet Tracking', body: "Sub-minute GPS updates across your entire fleet. Every vehicle's location, speed, heading, and status on a live map. Historical playback, geofencing alerts, and route adherence monitoring included." },
+        { tag: 'DRIVERS', title: 'Driver Behavior Intelligence', body: 'Score every driver on acceleration, braking, cornering, speed compliance, and idle time. Automated alerts, daily scorecards, and gamified performance boards drive measurable improvement.' },
+        { tag: 'RFID · SAFETY', title: 'Passenger Safety & RFID Boarding', body: 'RFID tap-in/tap-out captures precise boarding records for every passenger. Parent notifications dispatch automatically. Instant headcounts, stop-level logs, and audit-ready attendance.' },
+        { tag: 'SOS', title: 'Panic SOS & Emergency Response', body: 'One-touch panic activation triggers an immediate alert cascade — control room notification, supervisor SMS, and live location tracking. Built for school transport and safety mandates.' },
+        { tag: 'FUEL', title: 'Fuel Monitoring & Efficiency', body: 'Track consumption per vehicle, route, and driver via fuel sensors or CAN bus. Detect anomalies, flag siphoning events, and generate reports that pay for the platform within a quarter.' },
+        { tag: 'COMMAND', title: 'Operations Dashboard & Reporting', body: 'An enterprise command center — route performance, SLA compliance, maintenance scheduling, audit logs, and regulatory reports with role-based permissions.' },
+        { tag: 'MOBILE', title: 'Driver & Supervisor Apps', body: 'White-labeled Android and iOS apps: trip assignments, route instructions, in-app SOS for drivers; real-time alerts and approval workflows for supervisors. Works offline.' },
+      ],
+      deploy: [
+        { num: '01', title: 'Hardware Supply & Installation', body: 'Kaarnex sources, configures, and installs all vehicle hardware — GPS nodes, RFID readers, panic buttons, and dashcams. Turnkey deployment minimizes downtime.' },
+        { num: '02', title: 'SaaS Platform Subscription', body: 'Monthly or annual tiers scaled by fleet size. Includes platform access, mobile apps, cloud hosting, data retention, and standard support SLA.' },
+        { num: '03', title: 'Enterprise Custom Deployments', body: 'Custom integrations, white-labeling, or on-premise hosting — dedicated engineering pods build, deploy, and maintain bespoke fleet solutions.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

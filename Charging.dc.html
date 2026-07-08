@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Kaarnex — Charging Station Intelligence</title>
+  <style>
+    html, body { margin:0; padding:0; background:#0a0c0b; }
+    * { box-sizing:border-box; }
+    @keyframes kx-pulse { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+    @keyframes kx-energy { 0% { left:0%; opacity:0; } 12% { opacity:1; } 88% { opacity:1; } 100% { left:94%; opacity:0; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#0a0c0b; color:#eceeed; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:72px; background:linear-gradient(180deg, rgba(10,12,11,.92), rgba(10,12,11,.72) 70%, rgba(10,12,11,0)); backdrop-filter:blur(6px);">
+    <a href="Home.dc.html" style="display:flex; align-items:center;"><img src="assets/logo.png" alt="Kaarnex" style="height:34px; display:block;" /></a>
+    <div style="display:flex; align-items:center; gap:clamp(12px, 2.2vw, 28px); font-size:12px; letter-spacing:.05em; white-space:nowrap;">
+      <a href="Fleet.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">FLEET PLATFORM</a>
+      <a href="OEM.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">SDV ENGINEERING</a>
+      <a href="Architecture.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ARCHITECTURE</a>
+      <a href="Industries.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">INDUSTRIES</a>
+      <a href="Charging.dc.html" style="color:#eceeed; text-decoration:none; border-bottom:1px solid #22c55e; padding-bottom:3px;">CHARGING</a>
+      <a href="About.dc.html" style="color:#aab3af; text-decoration:none;" style-hover="color:#eceeed;">ABOUT</a>
+      <a href="Contact.dc.html" style="color:#0a0c0b; text-decoration:none; background:#22c55e; padding:10px 18px; border-radius:3px; font-weight:600;" style-hover="background:#2ee06e;">TALK TO US</a>
+    </div>
+  </nav>
+
+  <!-- ============ SCROLL HERO: CHARGER ACTIVATION ============ -->
+  <div ref="{{ heroRef }}" data-screen-label="Charging hero — station activation" style="height:340vh; position:relative; --p:0;">
+    <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:radial-gradient(ellipse 80% 70% at 65% 55%, #0d1411 0%, #0a0c0b 72%);">
+
+      <!-- depot map layer (late, semi top-down) -->
+      <div style="position:absolute; inset:0; opacity:calc(clamp(0, (var(--p) - 62) / 12, 1) * .8); background-image:linear-gradient(rgba(140,170,155,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(140,170,155,.07) 1px, transparent 1px); background-size:80px 80px; transform:perspective(900px) rotateX(34deg) scale(1.35); transform-origin:50% 100%;"></div>
+
+      <!-- depot charging points -->
+      <sc-for list="{{ depotPoints }}" as="d" hint-placeholder-count="5">
+        <div style="position:absolute; left:{{ d.x }}; top:{{ d.y }}; opacity:calc(clamp(0, (var(--p) - {{ d.at }}) / 6, 1)); display:flex; align-items:center; gap:7px;">
+          <span style="width:8px; height:8px; border-radius:50%; background:{{ d.color }}; box-shadow:0 0 10px {{ d.glow }}; animation:kx-pulse 3.4s ease-in-out infinite;"></span>
+          <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.12em; color:#b7e8c8; background:rgba(10,14,12,.75); border:1px solid rgba(34,197,94,.22); padding:3px 7px; border-radius:2px;">{{ d.label }}</span>
+        </div>
+      </sc-for>
+
+      <!-- floor -->
+      <div style="position:absolute; left:0; right:0; bottom:0; height:24vh; background:linear-gradient(180deg, rgba(20,28,24,0), rgba(16,22,19,.85));"></div>
+
+      <!-- EV (background-left) -->
+      <div style="position:absolute; left:-6%; width:56%; bottom:12vh; opacity:calc(clamp(0, (var(--p) - 14) / 10, 1)); transform:translateX(calc(clamp(0, 1 - (var(--p) - 14) / 10, 1) * -30px)) scale(calc(1 + clamp(0, var(--p) / 100, 1) * .05)); transform-origin:40% 70%;">
+        <img src="assets/car-hero.png" alt="EV at charging bay" style="display:block; width:100%; transform:scaleX(-1); filter:brightness(.75); mask-image:radial-gradient(ellipse 66% 70% at 50% 52%, black 46%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse 66% 70% at 50% 52%, black 46%, transparent 75%);" />
+      </div>
+
+      <!-- energy line: charger -> car -->
+      <div style="position:absolute; left:34%; right:34%; bottom:24vh; height:2px; background:linear-gradient(270deg, rgba(34,197,94,.55), rgba(34,197,94,.12)); opacity:calc(clamp(0, (var(--p) - 40) / 8, 1));">
+        <div style="position:absolute; top:-3px; width:16px; height:8px; border-radius:4px; background:#22c55e; box-shadow:0 0 12px rgba(34,197,94,.9); animation:kx-energy 2.6s linear infinite reverse;"></div>
+      </div>
+
+      <!-- charger unit (foreground-right) -->
+      <div style="position:absolute; right:16%; bottom:14vh; width:150px;">
+        <div style="background:linear-gradient(180deg, #171c19, #101413); border:1px solid rgba(255,255,255,.12); border-radius:12px 12px 4px 4px; padding:18px 16px 22px; box-shadow:0 24px 60px rgba(0,0,0,.5);">
+          <!-- status LED strip -->
+          <div style="height:4px; border-radius:2px; margin-bottom:14px; background:linear-gradient(90deg, #22c55e calc(clamp(0, (var(--p) - 30) / 8, 1) * 100%), rgba(255,255,255,.08) calc(clamp(0, (var(--p) - 30) / 8, 1) * 100%)); box-shadow:0 0 12px rgba(34,197,94,calc(clamp(0, (var(--p) - 30) / 8, 1) * .6));"></div>
+          <!-- screen -->
+          <div style="background:#0a0d0b; border:1px solid rgba(34,197,94,.25); border-radius:6px; padding:12px 10px; text-align:center;">
+            <div ref="{{ pctRef }}" style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:26px; font-weight:600; color:#22c55e;">0%</div>
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:8.5px; letter-spacing:.18em; color:#5c655f; margin-top:4px;">DC FAST · 120 KW</div>
+            <div style="height:5px; border-radius:3px; margin-top:10px; background:rgba(255,255,255,.08); overflow:hidden;">
+              <div style="height:100%; border-radius:3px; background:#22c55e; width:calc(clamp(0, (var(--p) - 32) / 46, 1) * 100%);"></div>
+            </div>
+          </div>
+          <div style="margin-top:12px; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:8.5px; letter-spacing:.16em; color:#8b9490; text-align:center;">KAARNEX · CP-07</div>
+        </div>
+        <div style="height:22px; width:60%; margin:0 auto; background:linear-gradient(180deg, #101413, #0c0f0e); border:1px solid rgba(255,255,255,.08); border-top:none; border-radius:0 0 4px 4px;"></div>
+      </div>
+
+      <!-- charger status card -->
+      <div style="position:absolute; right:5%; top:24%; width:250px; background:rgba(16,21,18,.85); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:16px 18px; backdrop-filter:blur(8px); opacity:calc(clamp(0, (var(--p) - 48) / 10, 1)); transform:translateY(calc(clamp(0, 1 - (var(--p) - 48) / 10, 1) * 20px));">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#22c55e; margin-bottom:10px;">CP-07 · SESSION LIVE</div>
+        <div style="display:flex; flex-direction:column; gap:6px; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; color:#aab3af;">
+          <div>OUTPUT · 118.4 KW</div>
+          <div>TEMP · 41°C NOMINAL</div>
+          <div>EST. FULL · 22 MIN</div>
+          <div>TARIFF · OFF-PEAK ✓</div>
+        </div>
+      </div>
+
+      <!-- headline -->
+      <div style="position:absolute; left:8%; top:0; bottom:0; width:38%; display:flex; flex-direction:column; justify-content:center; gap:22px; padding:88px 0 100px; opacity:calc(clamp(0, 1 - (var(--p) - 36) / 14, 1)); transform:translateY(calc(clamp(0, (var(--p) - 36) / 14, 1) * -26px)); pointer-events:none;">
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e;">CHARGING STATION INTELLIGENCE</div>
+        <h1 style="margin:0; font-size:clamp(36px, 4vw, 58px); line-height:1.05; font-weight:600; letter-spacing:-0.015em;">EV fleet readiness, powered by the depot.</h1>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:#9aa39f; max-width:46ch;">Chargers, energy flow, battery state, and depot scheduling — folded into the same intelligence layer that runs your fleet. Physical infrastructure, made software.</p>
+        <div style="pointer-events:auto;"><a href="Contact.dc.html" style="display:inline-block; background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:14px; padding:14px 24px; border-radius:3px;" style-hover="background:#2ee06e;">Plan Your Charging Layer</a></div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">SCROLL — POWER UP THE DEPOT ↓</div>
+      </div>
+
+      <!-- resolution: analytics chips -->
+      <div style="position:absolute; left:0; right:0; bottom:8vh; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; opacity:calc(clamp(0, (var(--p) - 80) / 10, 1));">
+        <sc-for list="{{ energyChips }}" as="t" hint-placeholder-count="4">
+          <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.1em; color:#b7e8c8; border:1px solid rgba(34,197,94,.3); background:rgba(12,17,14,.8); padding:9px 14px; border-radius:3px;">{{ t }}</span>
+        </sc-for>
+      </div>
+
+      <div style="position:absolute; left:40px; bottom:32px; display:flex; align-items:center; gap:14px;">
+        <div style="width:120px; height:2px; background:rgba(255,255,255,.1); border-radius:1px; overflow:hidden;"><div style="height:100%; width:calc(var(--p) * 1%); background:#22c55e;"></div></div>
+        <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.18em; color:#5c655f;">DEPOT ENERGY INTELLIGENCE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODULES ============ -->
+  <section data-screen-label="Charging modules" style="padding:120px 0; background:#0a0c0b;">
+    <div style="width:min(1200px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">DEPOT INTELLIGENCE MODULES</div>
+      <h2 style="margin:0 0 56px; font-size:clamp(30px, 3vw, 44px); font-weight:600; letter-spacing:-0.015em;">From plug to platform.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
+          <div style="background:linear-gradient(180deg, #101513, #0c0f0e); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:28px; transition:transform .35s ease, border-color .35s ease;" style-hover="border-color:rgba(34,197,94,.35); transform:translateY(-5px);">
+            <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:#22c55e; margin-bottom:14px;">{{ m.tag }}</div>
+            <div style="font-size:18px; font-weight:600; margin-bottom:12px;">{{ m.title }}</div>
+            <p style="margin:0; font-size:14px; line-height:1.65; color:#9aa39f;">{{ m.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT CONNECTS ============ -->
+  <section data-screen-label="Fleet integration" style="padding:110px 0; background:#0c0f0e; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(900px, 88vw); margin:0 auto;">
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.22em; color:#22c55e; margin-bottom:18px;">ONE INTELLIGENCE LAYER</div>
+      <p style="margin:0; font-size:clamp(20px, 2vw, 27px); line-height:1.55; color:#cfd6d2;">Charging isn't a separate system. State-of-charge feeds route assignment. Off-peak tariffs feed dispatch schedules. Charger faults feed maintenance workflows. <span style="color:#22c55e;">The depot and the fleet share one brain.</span></p>
+      <a href="Fleet.dc.html" style="display:inline-block; margin-top:28px; font-size:13px; color:#22c55e; text-decoration:none; letter-spacing:.06em;">SEE THE FLEET PLATFORM →</a>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section data-screen-label="Charging CTA" style="padding:130px 0; background:radial-gradient(ellipse 70% 90% at 50% 110%, rgba(34,197,94,.14), rgba(10,12,11,0) 60%), #0a0c0b; border-top:1px solid rgba(255,255,255,.06); text-align:center;">
+    <div style="width:min(760px, 88vw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <h2 style="margin:0; font-size:clamp(28px, 2.8vw, 40px); font-weight:600; letter-spacing:-0.015em;">Electrifying your fleet?</h2>
+      <p style="margin:0; font-size:16px; line-height:1.6; color:#9aa39f;">We'll map charging infrastructure, depot layout, and energy analytics to your routes and duty cycles.</p>
+      <a href="Contact.dc.html" style="margin-top:8px; background:#22c55e; color:#0a0c0b; text-decoration:none; font-weight:600; font-size:15px; padding:16px 30px; border-radius:3px;" style-hover="background:#2ee06e;">Plan Your Charging Layer →</a>
+    </div>
+  </section>
+
+  <footer style="padding:56px 0; background:#0a0c0b; border-top:1px solid rgba(255,255,255,.06);">
+    <div style="width:min(1200px, 88vw); margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <img src="assets/logo.png" alt="Kaarnex" style="height:26px; opacity:.85;" />
+      <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; color:#5c655f;">FLEET INTELLIGENCE · SDV ENGINEERING · POWERED FROM INDIA · BUILT FOR THE WORLD</div>
+      <div style="display:flex; gap:20px; font-size:12px;">
+        <a href="About.dc.html" style="color:#8b9490; text-decoration:none;">About</a>
+        <a href="Contact.dc.html" style="color:#8b9490; text-decoration:none;">Contact</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = null; this._update(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this._update();
+    this._setupReveal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._io) this._io.disconnect();
+  }
+  _setupReveal() {
+    const els = Array.from(document.querySelectorAll('section > div'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0px)';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1)';
+      io.observe(el);
+    });
+    this._io = io;
+  }
+  _update() {
+    const hero = this._hero;
+    if (!hero) return;
+    const vh = window.innerHeight;
+    const total = Math.max(1, hero.offsetHeight - vh);
+    const y = -hero.getBoundingClientRect().top;
+    const p = Math.max(0, Math.min(1, y / total)) * 100;
+    hero.style.setProperty('--p', p.toFixed(2));
+    // battery percentage: rises between p 32 and 78
+    const pct = Math.round(Math.max(0, Math.min(1, (p - 32) / 46)) * 100);
+    if (this._pct) {
+      const txt = pct + '%';
+      if (this._pct.textContent !== txt) this._pct.textContent = txt;
+    }
+  }
+  renderVals() {
+    return {
+      heroRef: (el) => { this._hero = el; if (el) this._update(); },
+      pctRef: (el) => { this._pct = el; },
+      depotPoints: [
+        { label: 'CP-01 · CHARGING', x: '14%', y: '18%', at: 66, color: '#22c55e', glow: 'rgba(34,197,94,.9)' },
+        { label: 'CP-02 · READY', x: '32%', y: '10%', at: 70, color: '#22c55e', glow: 'rgba(34,197,94,.9)' },
+        { label: 'CP-04 · CHARGING', x: '52%', y: '16%', at: 74, color: '#22c55e', glow: 'rgba(34,197,94,.9)' },
+        { label: 'CP-05 · QUEUED', x: '68%', y: '8%', at: 78, color: '#9fb3a8', glow: 'rgba(160,180,170,.7)' },
+        { label: 'CP-06 · FAULT → TICKET', x: '84%', y: '15%', at: 82, color: '#ef4444', glow: 'rgba(239,68,68,.8)' },
+      ],
+      energyChips: ['DEPOT LOAD · 640 KW', 'OFF-PEAK WINDOW · ACTIVE', 'FLEET READY · 06:00', 'ENERGY COST · −18% MTD'],
+      modules: [
+        { tag: 'STATUS', title: 'Charger Status & Sessions', body: 'Live state of every charge point — output, temperature, session progress, and fault codes. Faults raise maintenance tickets automatically.' },
+        { tag: 'DEPOT MAP', title: 'Depot Map & Scheduling', body: 'A semi top-down view of every bay: charging, ready, queued, or faulted. Overnight schedules sequence vehicles so the fleet is ready by first departure.' },
+        { tag: 'ENERGY', title: 'Energy Analytics & Tariffs', body: 'Load curves, per-vehicle energy cost, and off-peak optimization. Shift charging into cheap windows without missing morning readiness.' },
+        { tag: 'BATTERY', title: 'Battery Intelligence', body: 'State-of-charge and state-of-health per vehicle, fed into route assignment — range-aware dispatch, no mid-route surprises.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
