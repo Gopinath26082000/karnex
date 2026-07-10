@@ -95,7 +95,7 @@ export function ScrollHero({ kind }: { kind:HeroKind }) {
            kind === "charging" ? <strong>Intelligent charging, energy, and depot readiness in one platform.</strong> :
            <strong>Software-defined vehicle engineering for OEMs and connected programs.</strong>}
         </div>
-        <div className="stage-progress"><i><b style={{width:`${p}%`}}/></i><span>{kind === "home" ? stageName(p) : kind === "fleet" ? "Fleet command center" : kind === "oem" ? "Vehicle software stack" : "Depot energy intelligence"}</span></div>
+        <div className="stage-progress"><i><b style={{width:`${p}%`}}/></i></div>
       </div>
     </section>
   );
@@ -129,7 +129,5 @@ function FleetCards({progress:p}:{progress:number}) { const cards=[["Vehicles on
 
 function ArchitectureHero({innerRef,progress:p,length}:{innerRef:React.RefObject<HTMLDivElement|null>;progress:number;length:number}) {
   const steps=[["⌁","Vehicle Edge","",8],["⇄","Encrypted Channel","",18],["▣","Security Layer","",28],["☁","Cloud Processing","",38],["▤","Dashboard","",48]];
-  return <section ref={innerRef} className="scroll-hero scroll-hero-architecture" style={{height:`${length}vh`}}><div className="scroll-stage"><div className="architecture-copy"><h1 className="hero-heading">Built to <span className="hero-highlight">Run.</span><br/>Built to <span className="hero-highlight">Last.</span><br/>Built to <span className="hero-highlight">Scale.</span></h1><p>The automotive industry demands zero tolerance for downtime, data integrity failures, or security vulnerabilities. We design against those expectations as a first principle.</p></div><div className="pipeline">{steps.map((s,i)=><div className="pipeline-wrap" key={String(s[1])}><article style={{opacity:enter(p,Number(s[3]),8),transform:`translateY(${(1-enter(p,Number(s[3]),8))*22}px)`}}><b>{s[0]}</b><strong>{s[1]}</strong>{s[2]&&<span>{s[2]}</span>}</article>{i<4&&<i style={{opacity:enter(p,Number(s[3])+6,6)}}><em/></i>}</div>)}</div><div className="stage-progress"><i><b style={{width:`${p}%`}}/></i><span className="kx-mono">VEHICLE → CLOUD · ENCRYPTED</span></div></div></section>;
+  return <section ref={innerRef} className="scroll-hero scroll-hero-architecture" style={{height:`${length}vh`}}><div className="scroll-stage"><div className="architecture-copy"><h1 className="hero-heading">Built to <span className="hero-highlight">Run.</span><br/>Built to <span className="hero-highlight">Last.</span><br/>Built to <span className="hero-highlight">Scale.</span></h1><p>The automotive industry demands zero tolerance for downtime, data integrity failures, or security vulnerabilities. We design against those expectations as a first principle.</p></div><div className="pipeline">{steps.map((s,i)=><div className="pipeline-wrap" key={String(s[1])}><article style={{opacity:enter(p,Number(s[3]),8),transform:`translateY(${(1-enter(p,Number(s[3]),8))*22}px)`}}><b>{s[0]}</b><strong>{s[1]}</strong>{s[2]&&<span>{s[2]}</span>}</article>{i<4&&<i style={{opacity:enter(p,Number(s[3])+6,6)}}><em/></i>}</div>)}</div><div className="stage-progress"><i><b style={{width:`${p}%`}}/></i></div></div></section>;
 }
-
-function stageName(p:number){return p<15?"01 — VEHICLE REVEAL":p<38?"02 — INTELLIGENCE LAYER":p<62?"03 — ROUTE & FLEET DATA":p<87?"04 — FLEET × OEM":"05 — RESOLUTION"}
