@@ -7,12 +7,17 @@ import { useEffect, useState } from "react";
 import { publicPath } from "@/lib/publicPath";
 
 const navigation = [["/fleet","Fleet platform"],["/oem","SDV engineering"],["/architecture","Architecture"],["/industries","Industries"],["/charging","Charging"],["/about","About"]];
+const normalizePath = (value:string|null) => {
+  if (!value || value === "/") return "/";
+  return value.replace(/\/+$/,"");
+};
 
 export function Header(){
   const path=usePathname();
+  const currentPath=normalizePath(path);
   const [open,setOpen]=useState(false);
   useEffect(()=>setOpen(false),[path]);
-  return <header className="kx-header"><Link href="/" className="kx-logo" aria-label="Kaarnex home"><Image src={publicPath("/kaarnex/logo.png")} alt="Kaarnex" width={430} height={115} priority/></Link><nav className={open?"kx-nav is-open":"kx-nav"} aria-label="Main navigation">{navigation.map(([href,label])=><Link key={href} href={href} className={path===href?"is-active":""}>{label}</Link>)}<Link className="kx-talk" href="/contact">Talk to us</Link></nav><button className="kx-menu" onClick={()=>setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}><i/><i/></button></header>;
+  return <header className="kx-header"><Link href="/" className="kx-logo" aria-label="Kaarnex home"><Image src={publicPath("/kaarnex/logo.png")} alt="Kaarnex" width={430} height={115} priority/></Link><nav className={open?"kx-nav is-open":"kx-nav"} aria-label="Main navigation">{navigation.map(([href,label])=><Link key={href} href={href} className={currentPath===normalizePath(href)?"is-active":""}>{label}</Link>)}<Link className={currentPath==="/contact"?"kx-talk is-active":"kx-talk"} href="/contact">Talk to us</Link></nav><button className="kx-menu" onClick={()=>setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}><i/><i/></button></header>;
 }
 
 export function Footer(){
